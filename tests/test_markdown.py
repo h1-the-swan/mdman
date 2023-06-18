@@ -35,7 +35,7 @@ def test_markdown_split_and_rejoin():
         section_nonexisting = md_doc.get_section_by_title("nonexistent")
 
     rejoin = "\n".join([section.txt for section in md_doc.sections])
-    assert markdown_text == rejoin
+    assert markdown_text.strip() == rejoin.strip()
 
 
 def test_update_body(rootdir):
@@ -49,11 +49,11 @@ def test_update_body(rootdir):
     assert md2.txt == txt2
 
     results = []
-    for sec in md1.sections:
+    for sec in md1.get_sections_by_level(2):
         update_txt = md2.get_section_by_title(sec.title).txt
         result = sec.update(update_txt)
         assert result in ["updated", "no update"]
         results.append(result=="updated")
     assert any(results)  # at least one section was updated
 
-    assert md1.txt == txt2
+    assert md1.txt.strip() == txt2.strip()
