@@ -21,3 +21,5 @@ tmp*
 
 cov*.xml
 .coverage
+
+dist/
